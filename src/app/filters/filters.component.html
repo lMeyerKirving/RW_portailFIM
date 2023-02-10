@@ -37,7 +37,7 @@
 
 <div *ngIf="view === 'presets'" class="presets-wrapper">
 
-  <mat-card *ngFor="let preset of presets" class="preset">
+  <mat-card appearance="outlined" *ngFor="let preset of presets" class="preset">
     <div (click)="loadPreset(preset)">
       {{ preset.name }}
     </div>

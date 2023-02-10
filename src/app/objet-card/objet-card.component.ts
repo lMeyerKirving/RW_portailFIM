@@ -1,7 +1,7 @@
 import { AudrosService } from './../services/audros.service';
 import { ObjetDetailsComponent } from './../objet-details/objet-details.component';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-objet-card',

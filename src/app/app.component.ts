@@ -1,5 +1,5 @@
 import { SessionExpiredComponent } from './sessionExpired/sessionExpired.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AudrosService } from './services/audros.service';
 import { Component, OnInit } from '@angular/core';
 
