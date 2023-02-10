@@ -1,0 +1,33 @@
+.details-wrapper {
+  max-height: calc(100vh - 160px);
+}
+
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 30px;
+  gap: 10px;
+  flex-shrink: 0;
+
+  .icon {
+    width: 30px;
+  }
+}
+
+.left-panel {
+  width: 500px;
+  flex-shrink: 0;
+}
+
+.icon-file {
+  font-size: 70px;
+  width: auto;
+  color: #4C8BF4;
+  height: auto;
+}
+
+.image-galery {
+  width: 250px;
+  height: 250px;
+}

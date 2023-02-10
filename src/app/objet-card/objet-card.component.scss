@@ -1,0 +1,19 @@
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  gap: 5px;
+
+  .icon {
+    width: 30px;
+  }
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}

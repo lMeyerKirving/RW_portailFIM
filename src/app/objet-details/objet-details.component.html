@@ -1,0 +1,60 @@
+<div class="details-wrapper">
+  <div class="flex">
+
+    <div class="left-panel">
+      <div class="left-panel__header text-center font-bold text-xl">{{ object.title }}</div>
+      <div class="left-panel__subheader text-center font-semibold text-lg">{{ object.subtitle }}</div>
+
+      <img [src]="bigImageUrl" alt="" class="big-image">
+    </div>
+
+    <div class="right-panel">
+      <div class="buttons-wrapper flex justify-end gap-2">
+        <button mat-stroked-button color="primary">Close</button>
+        <button mat-raised-button color="primary">Export PDF</button>
+        <button mat-mini-fab><mat-icon>menu</mat-icon></button>
+      </div>
+
+      <div class="right-panel-wrapper flex relative">
+        <div class="icons flex flex-col gap-2 mr-2">
+          <img *ngFor="let icon of object.icons" [src]="icon.url" [alt]="icon.tooltip" class="icon" [matTooltip]="icon.tooltip" matTooltipPosition="right">
+        </div>
+
+        <div class="flex flex-col">
+          <div class="content-desc">
+            <div class="content-title text-lg mb-2 font-bold">Description</div>
+            <div class="content-value">{{ object.description }}</div>
+          </div>
+
+          <div class="content-desc mt-6">
+            <div class="content-title text-lg mb-2 font-bold">Documents</div>
+            <div class="content-value flex gap-4 flex-wrap">
+              <a *ngFor="let file of object.files" class="text-center" target="_blank" [href]="file.url">
+                <mat-icon class="icon-file">description</mat-icon><br/>
+                {{ file.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-6">
+
+    <div class="text-lg mb-2 font-bold">
+      Image gallery
+    </div>
+
+    <div class="flex gap-4 flex-wrap">
+
+      <img class="c-pointer image-galery" *ngFor="let imageGallery of object.pictures" [src]="imageGallery.url" (click)="bigImageUrl = imageGallery.url">
+
+    </div>
+
+  </div>
+
+</div>
+

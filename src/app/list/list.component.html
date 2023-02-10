@@ -1,0 +1,22 @@
+<div class="wrapper">
+
+  <mat-card class="filters">
+    <app-filters (filterSelection)="filterObjects($event)"></app-filters>
+  </mat-card>
+
+  <div class="results">
+    <div class="toolbar">
+      <button (click)="exportCsv()" mat-raised-button color="primary">
+        Export Excel
+      </button>
+
+      <button (click)="exportPdf()" mat-raised-button color="accent">
+        Export PDF
+      </button>
+    </div>
+
+    <app-objet-card class="result-objet" *ngFor="let object of objects" (selectionChanged)="selectionChanged($event)" [object]="object" [isFavorite]="isInFavorites(object)"></app-objet-card>
+    <div class="noresult" *ngIf="objects.length === 0">No results to show, you can try by changing filters</div>
+  </div>
+
+</div>

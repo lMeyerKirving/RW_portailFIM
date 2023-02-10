@@ -1,0 +1,51 @@
+
+
+<div class="header-wrapper">
+  <h2>Filters</h2>
+  <button [class.mat-accent]="view === 'presets'" mat-stroked-button (click)="(view === 'filters') ? view = 'presets' : view = 'filters'">Presets</button>
+</div>
+
+<div *ngIf="view === 'filters'" class="filters-wrapper">
+
+  <mat-checkbox [(ngModel)]="toSearch.favoritesOnly" value="" color="primary">Favorites only</mat-checkbox>
+
+  <mat-form-field *ngFor="let filter of filters">
+    <mat-label>{{ filter.displayName }}</mat-label>
+    <input *ngIf="filter.type === 'input'" matInput (change)="fieldChanged(filter.name, $event)" [value]="getValueToSearch(filter.name)">
+    <mat-select [value]="getValueToSearch(filter.name)" *ngIf="filter.type === 'select'"  (selectionChange)="fieldChanged(filter.name, $event)">
+      <mat-option></mat-option>
+      <mat-option *ngFor="let filterOption of filter.values" [value]="filterOption">{{ filterOption | titlecase }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="buttons-wrapper">
+    <div>
+      <button style="margin-right: 5px;" (click)="reset()" mat-stroked-button>
+        Reset
+      </button>
+      <button (click)="savePreset()" mat-stroked-button color="primary">
+        Save preset
+      </button>
+    </div>
+
+    <button (click)="doFilter()" mat-raised-button color="accent">
+      Filter
+    </button>
+  </div>
+
+</div>
+
+<div *ngIf="view === 'presets'" class="presets-wrapper">
+
+  <mat-card *ngFor="let preset of presets" class="preset">
+    <div (click)="loadPreset(preset)">
+      {{ preset.name }}
+    </div>
+
+    <div class="buttons-wrapper">
+      <button (click)="editPreset(preset)" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+      <button (click)="removePreset(preset)" mat-mini-fab color="warn"><mat-icon>close</mat-icon></button>
+    </div>
+  </mat-card>
+
+</div>

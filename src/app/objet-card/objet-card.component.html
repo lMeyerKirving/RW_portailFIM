@@ -1,0 +1,26 @@
+<mat-card *ngIf="object">
+    <mat-card-header>
+        <mat-card-title class="card-title">
+          <div>
+            <mat-checkbox (change)="onSelectionChanged($event)" color="primary"></mat-checkbox>
+            {{ object.title }}
+          </div>
+          <mat-icon class="c-pointer" *ngIf="isFavorite" (click)="removeFavorite()">star</mat-icon>
+          <mat-icon class="c-pointer" *ngIf="!isFavorite" (click)="addFavorite()">star_outline</mat-icon>
+        </mat-card-title>
+        <mat-card-subtitle>{{ object.subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+    <img matCardImage [src]="object.pictures[0].url">
+    <div class="icons">
+      <img *ngFor="let icon of object.icons" [src]="icon.url" [alt]="icon.tooltip" class="icon" [matTooltip]="icon.tooltip" matTooltipPosition="right">
+    </div>
+    <mat-card-content>
+
+
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button (click)="openDetails()">Details</button>
+
+    </mat-card-actions>
+</mat-card>

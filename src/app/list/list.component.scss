@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  gap: 15px;
+  background: #f4f4f4;
+  padding: 15px;
+}
+
+.filters {
+  width: 20%;
+}
+
+.results {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  max-height: calc(100vh - 46px);
+  overflow-y: auto;
+  flex-grow: 1;
+
+  .result-objet {
+    width: 309.2px;
+  }
+}
+
+.toolbar {
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+  gap: 15px;
+  max-height: 35px;
+}
+
+.noresult {
+  text-align: center;
+  flex-grow: 1;
+}

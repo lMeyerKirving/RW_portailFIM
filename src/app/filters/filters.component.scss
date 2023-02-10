@@ -1,0 +1,28 @@
+.filters-wrapper > * {
+  width: 100%;
+}
+
+.filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.presets-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
