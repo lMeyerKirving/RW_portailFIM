@@ -14,6 +14,7 @@ export class ListComponent implements OnInit {
   favorites: any[] = [];
   filterSelection = {};
   selection: any[] = [];
+  itemSet: any[] = [];
 
   constructor(
     private _audrosService: AudrosService,
@@ -25,11 +26,15 @@ export class ListComponent implements OnInit {
       this.objects = objects;
       this.allObjects = objects;
 
+      for (let index = 0; index < 1000; index++) {
+        this.objects = this.objects.concat(objects);
+        this.allObjects = this.allObjects.concat(objects);
+      }
+
       this.filterObjects(this.filterSelection);
     });
 
     this._audrosService.favorites.subscribe((favorites) => {
-      console.log(favorites);
       this.favorites = favorites;
 
       this.filterObjects(this.filterSelection);
@@ -69,6 +74,8 @@ export class ListComponent implements OnInit {
     if (filterSelection.favoritesOnly) {
       this.objects = this.objects.filter(object => this.isInFavorites(object));
     }
+
+    this.itemSet = this._generateDataChunk(this.objects);
   }
 
   isInFavorites(object: any): boolean {
@@ -135,6 +142,15 @@ export class ListComponent implements OnInit {
       link.click();
       document.body.removeChild(link);
     }
+  }
+
+  _generateDataChunk(data: any, chunk = 4) {
+    let index: number;
+    let dataChunk: [][] = [];
+    for (index = 0; index < data.length; index += chunk) {
+      dataChunk.push(data.slice(index, index + chunk));
+    }
+    return dataChunk;
   }
 
 }

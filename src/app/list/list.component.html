@@ -6,16 +6,28 @@
 
   <div class="results">
     <div class="toolbar">
-      <button (click)="exportCsv()" mat-raised-button color="primary">
-        Export Excel
-      </button>
+      <div class="nbResults font-bold">
+        {{ objects.length }} result{{ objects.length > 1 ? 's' : ''}}
+      </div>
+      <div class="buttons">
+        <button (click)="exportCsv()" mat-raised-button color="primary">
+          Export Excel
+        </button>
 
-      <button (click)="exportPdf()" mat-raised-button color="accent">
-        Export PDF
-      </button>
+        <button (click)="exportPdf()" mat-raised-button color="accent">
+          Export PDF
+        </button>
+      </div>
     </div>
 
-    <app-objet-card class="result-objet" *ngFor="let object of objects" (selectionChanged)="selectionChanged($event)" [object]="object" [isFavorite]="isInFavorites(object)"></app-objet-card>
+    <ng-container *ngIf="itemSet.length > 0">
+      <cdk-virtual-scroll-viewport itemSize="440" class="list" minBufferPx="5000" maxBufferPx="5000">
+        <div class="flex gap-itemSet mb-2" *cdkVirtualFor="let set of itemSet">
+          <app-objet-card class="result-objet" *ngFor="let object of set" (selectionChanged)="selectionChanged($event)" [object]="object" [isFavorite]="isInFavorites(object)"></app-objet-card>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </ng-container>
+
     <div class="noresult" *ngIf="objects.length === 0">No results to show, you can try by changing filters</div>
   </div>
 

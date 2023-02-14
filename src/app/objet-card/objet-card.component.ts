@@ -21,6 +21,7 @@ export class ObjetCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('init card selected');
   }
 
   openDetails(): void {

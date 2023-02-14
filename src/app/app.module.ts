@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ScrollingModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
