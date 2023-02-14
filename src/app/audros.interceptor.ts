@@ -65,14 +65,16 @@ export class AudrosInterceptor implements HttpInterceptor {
           return this.removePreset(request, next);
         case 'favorites':
           return this.getFavorites(request, next);
-        case 'objects':
-          return this.getObjects(request, next);
         case 'addFavorite':
           return this.addFavorite(request, next);
         case 'removeFavorite':
           return this.removeFavorite(request, next);
+        case 'objects':
+          return this.getObjects(request, next);
         case 'exportPdf':
           return this.exportPdf(request, next);
+        case 'getObjectActions':
+          return this.getObjectActions(request, next);
 
         default:
           return next.handle(request);
@@ -197,6 +199,16 @@ export class AudrosInterceptor implements HttpInterceptor {
                 "tooltip": "Lorem ipsum dolor sit amet, consectetur adip",
                 "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/How_to_use_icon.svg/1107px-How_to_use_icon.svg.png"
               }
+            ],
+            "iconsDetails": [
+              {
+                "tooltip": "Lorem ipsum dolor sit amet, consectetur adip",
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/How_to_use_icon.svg/1107px-How_to_use_icon.svg.png"
+              },
+              {
+                "tooltip": "Lorem ipsum dolor sit amet, consectetur adip",
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/How_to_use_icon.svg/1107px-How_to_use_icon.svg.png"
+              },
             ],
             "files": [
               {
@@ -389,6 +401,37 @@ export class AudrosInterceptor implements HttpInterceptor {
 
     let datas: any = {
       "data": {url : 'https://www.ideas2it.com/wp-content/uploads/2020/08/Angular-Development-Best-Practices.pdf'}
+    };
+
+    console.log('returning datas', datas);
+
+    return this.ok(datas);
+  }
+
+  getObjectActions(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log('getObjectActions');
+
+    let datas: any = {
+      "data": [
+        {
+          "name": "ouvrir URL",
+          "ws": "premiereAction",
+          "parameters": ["id", "material"],
+          "callback": "openUrl"
+        },
+        {
+          "name": "close after action",
+          "ws": "premiereAction",
+          "parameters": ["id", "material", "fezon"],
+          "callback": "closeDialog"
+        },
+        {
+          "name": "refresh objects",
+          "ws": "premiereAction",
+          "parameters": ["id", "material"],
+          "callback": "refreshObjects"
+        }
+      ]
     };
 
     console.log('returning datas', datas);

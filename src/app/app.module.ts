@@ -26,7 +26,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 @NgModule({
   declarations: [
@@ -58,8 +60,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCheckboxModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatMenuModule,
 
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxImageZoomModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AudrosInterceptor, multi: true }

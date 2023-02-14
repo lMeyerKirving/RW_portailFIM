@@ -1,23 +1,33 @@
-<div class="details-wrapper">
+<div class="details-wrapper p-4">
+
   <div class="flex">
 
     <div class="left-panel">
       <div class="left-panel__header text-center font-bold text-xl">{{ object.title }}</div>
       <div class="left-panel__subheader text-center font-semibold text-lg">{{ object.subtitle }}</div>
 
-      <img [src]="bigImageUrl" alt="" class="big-image">
+      <!-- <img [src]="bigImageUrl" alt="" class="big-image"> -->
+      <lib-ngx-image-zoom
+          [thumbImage]="bigImageUrl"
+          [fullImage]="bigImageUrl"
+          [enableScrollZoom]="true"
+      ></lib-ngx-image-zoom>
     </div>
 
     <div class="right-panel">
       <div class="buttons-wrapper flex justify-end gap-2">
-        <button mat-stroked-button color="primary">Close</button>
-        <button mat-raised-button color="primary">Export PDF</button>
-        <button mat-mini-fab><mat-icon>menu</mat-icon></button>
+        <button mat-stroked-button color="primary" (click)="closeDialog()">Close</button>
+        <button mat-raised-button color="primary" (click)="exportPdf()">Export PDF</button>
+        <button mat-mini-fab [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngFor="let action of actions" (click)="execAction(action)">{{ action.name }}</button>
+        </mat-menu>
       </div>
 
       <div class="right-panel-wrapper flex relative">
         <div class="icons flex flex-col gap-2 mr-2">
-          <img *ngFor="let icon of object.icons" [src]="icon.url" [alt]="icon.tooltip" class="icon" [matTooltip]="icon.tooltip" matTooltipPosition="right">
+          <img *ngFor="let icon of object.iconsDetails" [src]="icon.url" [alt]="icon.tooltip" class="icon" [matTooltip]="icon.tooltip" matTooltipPosition="right">
         </div>
 
         <div class="flex flex-col">

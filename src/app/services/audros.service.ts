@@ -68,9 +68,10 @@ export class AudrosService {
 
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
-
-        console.log(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.filters.next(data.data);
@@ -83,7 +84,10 @@ export class AudrosService {
     const url = `${this.audrosServer}${this._baseUrl}presets`;
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.presets.next(data.data);
@@ -96,7 +100,10 @@ export class AudrosService {
     const url = `${this.audrosServer}${this._baseUrl}objects`;
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.objects.next(data.data);
@@ -109,7 +116,10 @@ export class AudrosService {
     const url = `${this.audrosServer}${this._baseUrl}favorites`;
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.favorites.next(data.data);
@@ -122,7 +132,10 @@ export class AudrosService {
     const url = `${this.audrosServer}${this._baseUrl}removeFavorite@${id}`;
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.getFavorites().subscribe();
@@ -135,7 +148,10 @@ export class AudrosService {
     const url = `${this.audrosServer}${this._baseUrl}addFavorite@${id}`;
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data !== null) {
           this.getFavorites().subscribe();
@@ -152,7 +168,10 @@ export class AudrosService {
 
     return this._httpClient.post(url, {name: name, preset: preset}).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data!== null) {
           this.getPresets().subscribe();
@@ -166,7 +185,10 @@ export class AudrosService {
 
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         if (data!== null) {
           this.getPresets().subscribe();
@@ -180,24 +202,69 @@ export class AudrosService {
 
     return this._httpClient.get(url).pipe(
       map((data: any) => {
-        console.log('got response from server', data);
-        this.handleError(data);
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
         return data;
       })
     );
   }
 
-  public handleError(data: any): void {
+  public getObjectActions(id: string): Observable<any> {
+    const url = `${this.audrosServer}${this._baseUrl}getObjectActions@${id}`;
+    return this._httpClient.get(url).pipe(
+      map((data: any) => {
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
 
-    if (data && data.error) {
+        return data;
+      })
+    );
+  }
 
-      this._snackbar.open(data.error, '', {
+  public execActionWs(wsName:string, params: string): Observable<any> {
+    const url = `${this.audrosServer}${this._baseUrl}${wsName}@${params}`;
+    return this._httpClient.get(url).pipe(
+      map((data: any) => {
+        const hasError  = this.handleError(data);
+        if (hasError) {
+          return;
+        }
+
+        return data;
+      })
+    );
+  }
+
+  public handleError(response: any): boolean {
+
+    if (response && response.error) {
+
+      this._snackbar.open(response.error, '', {
         duration: 5000,
         panelClass: ['mat-toolbar','mat-warn']
       });
 
+      return true;
+
     }
+
+    if (response && response.warning) {
+
+      this._snackbar.open(response.error, '', {
+        duration: 5000,
+        panelClass: ['mat-toolbar','mat-info']
+      });
+
+      return true;
+
+    }
+
+    return false;
 
   }
 }

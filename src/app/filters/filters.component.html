@@ -1,11 +1,11 @@
 
 
 <div class="header-wrapper">
-  <h2>Filters</h2>
+  <h2 class="text-xl font-bold ml-2">Filters</h2>
   <button [class.mat-accent]="view === 'presets'" mat-stroked-button (click)="(view === 'filters') ? view = 'presets' : view = 'filters'">Presets</button>
 </div>
 
-<div *ngIf="view === 'filters'" class="filters-wrapper">
+<div *ngIf="view === 'filters'" class="filters-wrapper p-2">
 
   <mat-checkbox [(ngModel)]="toSearch.favoritesOnly" value="" color="primary">Favorites only</mat-checkbox>
 
@@ -35,16 +35,18 @@
 
 </div>
 
-<div *ngIf="view === 'presets'" class="presets-wrapper">
+<div *ngIf="view === 'presets'" class="presets-wrapper p-2">
 
-  <mat-card appearance="outlined" *ngFor="let preset of presets" class="preset">
-    <div (click)="loadPreset(preset)">
-      {{ preset.name }}
-    </div>
+  <mat-card appearance="outlined" *ngFor="let preset of presets" class="preset p-2">
+    <div class="flex justify-between items-center">
+      <div (click)="loadPreset(preset)">
+        {{ preset.name }}
+      </div>
 
-    <div class="buttons-wrapper">
-      <button (click)="editPreset(preset)" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
-      <button (click)="removePreset(preset)" mat-mini-fab color="warn"><mat-icon>close</mat-icon></button>
+      <div class="flex gap-2">
+        <button (click)="editPreset(preset)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <button (click)="removePreset(preset)" mat-icon-button color="warn"><mat-icon>close</mat-icon></button>
+      </div>
     </div>
   </mat-card>
 

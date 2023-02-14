@@ -1,13 +1,15 @@
-<div>Edit preset name</div>
+<div class="p-4">
+  <div class="font-bold mb-2">Edit preset name</div>
 
-<mat-form-field>
-  <mat-label>Name</mat-label>
-  <input matInput [(ngModel)]="name">
-</mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
 
-<div class="buttons-wrapper">
+  <div class="buttons-wrapper">
 
-  <button mat-raised-button (click)="save()">Save</button>
-  <button mat-raised-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button (click)="save()">Save</button>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
 
+  </div>
 </div>
