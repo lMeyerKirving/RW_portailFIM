@@ -1,8 +1,6 @@
 .wrapper {
   display: flex;
   gap: 30px;
-  background: #f4f4f4;
-  padding: 30px;
 }
 
 .filters {
@@ -26,7 +24,7 @@
 
 .list {
   width: 100%;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 150px);
 }
 
 .toolbar {

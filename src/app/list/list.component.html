@@ -1,4 +1,9 @@
-<div class="wrapper">
+<div class="header flex items-center justify-between drop-shadow-lg bg-blue-900 text-white py-1 px-4">
+  <div>Raymond Weil - FIM Portal</div>
+  <div>Connected as: {{ login }} - <button mat-flat-button (click)="logout()">Logout</button></div>
+</div>
+
+<div class="wrapper p-4">
 
   <mat-card appearance="outlined" class="filters">
     <app-filters (filterSelection)="filterObjects($event)"></app-filters>

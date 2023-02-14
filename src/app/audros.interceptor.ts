@@ -47,6 +47,10 @@ export class AudrosInterceptor implements HttpInterceptor {
       return this.getConnect(request, next);
     }
 
+    if (request.url.indexOf('LogoutXML') !== -1) {
+      return this.getConnect(request, next);
+    }
+
     let extractedServiceParameters = this.extractServiceParameters(request);
     if (extractedServiceParameters !== '') {
       // extract first result of split '@' as it's the service name

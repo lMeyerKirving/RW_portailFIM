@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
+  login = '';
+
   allObjects: any[] = [];
   objects: any[] = [];
   favorites: any[] = [];
@@ -22,14 +24,11 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.login = this._audrosService.UL;
+
     this._audrosService.objects.subscribe((objects) => {
       this.objects = objects;
       this.allObjects = objects;
-
-      for (let index = 0; index < 1000; index++) {
-        this.objects = this.objects.concat(objects);
-        this.allObjects = this.allObjects.concat(objects);
-      }
 
       this.filterObjects(this.filterSelection);
     });
@@ -144,7 +143,14 @@ export class ListComponent implements OnInit {
     }
   }
 
-  _generateDataChunk(data: any, chunk = 4) {
+  logout(): void {
+    this._audrosService.logout().subscribe(() => {
+      console.log('logged out');
+      window.location.reload();
+    });
+  }
+
+  private _generateDataChunk(data: any, chunk = 4) {
     let index: number;
     let dataChunk: [][] = [];
     for (index = 0; index < data.length; index += chunk) {
