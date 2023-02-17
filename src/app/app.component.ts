@@ -9,20 +9,19 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'rw-front';
+  title = 'Portail FIM';
   private _timeoutAudros: any;
 
   constructor(
     private _audrosService: AudrosService,
     private _dialog: MatDialog
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this._audrosService.errorConnection.subscribe((error: string) => {
       if (error !== '') {
 
-        let dialogRef = this._dialog.open(SessionExpiredComponent, {data: {errorMsg: error}});
+        this._dialog.open(SessionExpiredComponent, {data: {errorMsg: error}});
 
       }
     });
@@ -31,8 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:beforeunload')
-  async ngOnDestroy()
-  {
+  async ngOnDestroy() {
     await this._audrosService.logout().subscribe();
   }
 
