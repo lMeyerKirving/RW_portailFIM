@@ -79,6 +79,8 @@ export class AudrosInterceptor implements HttpInterceptor {
           return this.exportPdf(request, next);
         case 'getObjectActions':
           return this.getObjectActions(request, next);
+        case 'actionDownloadFile':
+          return this.exportPdf(request, next);
 
         default:
           return next.handle(request);
@@ -175,7 +177,8 @@ export class AudrosInterceptor implements HttpInterceptor {
             "pictures": [
               {
                 "id": 1,
-                "url": "https://glauser.vteximg.com.br/arquivos/ids/155894/5180-st-00300.png?v=637408010481530000"
+                "url": "https://glauser.vteximg.com.br/arquivos/ids/155894/5180-st-00300.png?v=637408010481530000",
+                "original": "https://glauser.vteximg.com.br/arquivos/ids/155894/5180-st-00300.png?v=637408010481530000"
               },
               {
                 "id": 2,
@@ -421,19 +424,25 @@ export class AudrosInterceptor implements HttpInterceptor {
           "name": "ouvrir URL",
           "ws": "premiereAction",
           "parameters": ["id", "material"],
-          "callback": "openUrl"
+          "callback": ["openUrl"]
         },
         {
           "name": "close after action",
           "ws": "premiereAction",
           "parameters": ["id", "material", "fezon"],
-          "callback": "closeDialog"
+          "callback": ["closeDialog"]
         },
         {
           "name": "refresh objects",
           "ws": "premiereAction",
           "parameters": ["id", "material"],
-          "callback": "refreshObjects"
+          "callback": ["refreshObjects"]
+        },
+        {
+          "name": "download file",
+          "ws": "actionDownloadFile",
+          "parameters": ["id", "material"],
+          "callback": ["download", "closeDialog"]
         }
       ]
     };

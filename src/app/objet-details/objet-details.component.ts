@@ -1,6 +1,8 @@
+import { SessionExpiredComponent } from './../sessionExpired/sessionExpired.component';
+import { HttpClient } from '@angular/common/http';
 import { AudrosService } from './../services/audros.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-objet-details',
@@ -11,15 +13,20 @@ export class ObjetDetailsComponent implements OnInit {
 
   object: any;
   bigImageUrl: string = '';
+  bigImageUrlOriginal: string = '';
   actions: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ObjetDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _audrosService: AudrosService
+    private _audrosService: AudrosService,
+    private _http: HttpClient,
+    private _dialog: MatDialog
   ) {
     this.object = data.object;
-    this.bigImageUrl = this.object.pictures[0].url;
+    if (this.object.pictures && this.object.pictures.length > 0) {
+      this.changeBigImage(this.object.pictures[0]);
+    }
   }
 
   ngOnInit(): void {
@@ -30,6 +37,11 @@ export class ObjetDetailsComponent implements OnInit {
         this.actions = response.data;
       }
     });
+  }
+
+  changeBigImage(image: any) {
+    this.bigImageUrl = image.url;
+    this.bigImageUrlOriginal = image.original ? image.original : image.url;
   }
 
   closeDialog() {
@@ -45,8 +57,6 @@ export class ObjetDetailsComponent implements OnInit {
   }
 
   execAction(action: any): void {
-    console.log('executing action', action);
-
     if (action.ws !== undefined && action.ws !== null && action.url !== '') {
       let params = [];
       for (const param of action.parameters) {
@@ -66,20 +76,56 @@ export class ObjetDetailsComponent implements OnInit {
   }
 
   execCallbackAction(action: any, param: any = ''): void {
-    switch (action.callback) {
-      case 'openUrl':
-        window.open(param);
-        break;
-      case 'closeDialog':
-        this.closeDialog();
-        break;
-      case 'refreshObjects':
-        this._audrosService.getObjects().subscribe();
-        break;
+    console.log('Executing callback');
+    console.log(action, param);
 
-      default:
-        break;
+    for (const callbackAction of action.callback) {
+      switch (callbackAction) {
+        case 'openUrl':
+          window.open(param.url);
+          break;
+        case 'closeDialog':
+          this.closeDialog();
+          break;
+        case 'refreshObjects':
+          this._audrosService.getObjects().subscribe();
+          break;
+        case 'download':
+          this.download(param.url);
+          break;
+
+        default:
+          break;
+      }
     }
+  }
+
+  download(url: string): void {
+    if (url === undefined || url === '') {
+      return;
+    }
+
+    const filename = this.getFilename(url);
+
+    this._http.get(url, {
+      responseType: 'blob'
+    }).subscribe({
+      next: blob => {
+        const a = document.createElement('a')
+        const objectUrl = URL.createObjectURL(blob)
+        a.href = objectUrl
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      },
+      error: () => {
+        this._dialog.open(SessionExpiredComponent, {data: {errorMsg: 'Unable to download file at url: ' + url}});
+      }
+    });
+  }
+
+  getFilename(url: string): string {
+    return url.substring(url.lastIndexOf('/')+1);
   }
 
 }
