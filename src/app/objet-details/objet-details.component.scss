@@ -16,8 +16,9 @@
 }
 
 .left-panel {
-  width: 500px;
+  width: 300px;
   flex-shrink: 0;
+  margin-right: 15px;
 }
 
 .icon-file {
@@ -28,6 +29,5 @@
 }
 
 .image-galery {
-  width: 250px;
-  height: 250px;
+  width: 200px;
 }

@@ -25,9 +25,17 @@ export class ObjetCardComponent implements OnInit {
   }
 
   openDetails(): void {
-    const dialogRef = this.dialog.open(ObjetDetailsComponent, {
+    this.dialog.open(ObjetDetailsComponent, {
       data: {object: this.object},
     });
+  }
+
+  getObjectPicture(): string {
+    if (this.object.pictures !== undefined && this.object.pictures.length > 0 && this.object.pictures[0].url !== undefined) {
+      return this.object.pictures[0].url;
+    }
+
+    return "https://picsum.photos/300/450";
   }
 
   addFavorite(): void {

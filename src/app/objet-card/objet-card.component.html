@@ -10,7 +10,7 @@
         </mat-card-title>
         <mat-card-subtitle class="pl-2">{{ object.subtitle }}</mat-card-subtitle>
     </mat-card-header>
-    <img matCardImage [src]="object.pictures[0].url">
+    <img matCardImage [src]="getObjectPicture()">
     <div class="icons">
       <img *ngFor="let icon of object.icons" [src]="icon.url" [alt]="icon.tooltip" class="icon" [matTooltip]="icon.tooltip" matTooltipPosition="right">
     </div>

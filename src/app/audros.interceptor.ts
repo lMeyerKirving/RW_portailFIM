@@ -18,10 +18,7 @@ export class AudrosInterceptor implements HttpInterceptor {
   presets = [{
     "id": "100000",
     "name": "Preset 1",
-    "value": {
-      "favoritesOnly": true,
-      "material": "steel"
-    }
+    "value": "{\"forme_boitier\": \"oval\",\"favoritesOnly\": false,\"genre\": \"gents\"}"
   },
   {
     "id": "100010",
@@ -453,6 +450,7 @@ export class AudrosInterceptor implements HttpInterceptor {
   }
 
   ok(body? :any) {
+    console.log('returning datas', body);
     return of(new HttpResponse({ status: 200, body })).pipe(delay(350));
   }
 }

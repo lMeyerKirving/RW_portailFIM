@@ -33,7 +33,7 @@ export class ObjetDetailsComponent implements OnInit {
     this.actions = [];
 
     this._audrosService.getObjectActions(this.object.id).subscribe((response: any) => {
-      if (response.data && response.data.length > 0) {
+      if (response && response.data && response.data.length > 0) {
         this.actions = response.data;
       }
     });

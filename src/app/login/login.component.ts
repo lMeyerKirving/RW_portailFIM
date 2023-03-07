@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
       this._audrosService.connectAudros(this.form.get('username')?.getRawValue(), this.form.get('password')?.getRawValue()).then(() => {
         this._router.navigate(['/list']);
         this.form.reset();
-        this._snackbar.open('Connected!', 'Close', { duration: 3000 });
       });
     }
   }

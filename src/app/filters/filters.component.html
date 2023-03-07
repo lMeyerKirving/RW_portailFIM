@@ -39,7 +39,7 @@
 
   <mat-card appearance="outlined" *ngFor="let preset of presets" class="preset p-2">
     <div class="flex justify-between items-center">
-      <div (click)="loadPreset(preset)">
+      <div class="c-pointer" (click)="loadPreset(preset)">
         {{ preset.name }}
       </div>
 

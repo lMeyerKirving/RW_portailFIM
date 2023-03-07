@@ -21,7 +21,7 @@ export class AudrosService {
   public filters: BehaviorSubject<[]> = new BehaviorSubject([]);
   public objects: BehaviorSubject<[]> = new BehaviorSubject([]);
   public favorites: BehaviorSubject<[]> = new BehaviorSubject([]);
-  public presets: BehaviorSubject<[]> = new BehaviorSubject([]);
+  public presets: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   private _sessionId = '';
   private _baseUrl: string = '';
@@ -89,8 +89,20 @@ export class AudrosService {
           return;
         }
 
-        if (data !== null) {
-          this.presets.next(data.data);
+        if (data !== null && data.data !== undefined) {
+          let presetsArray = [];
+
+          for (const dataPreset of data.data) {
+            if (this._isJsonString(dataPreset.value)) {
+              presetsArray.push({
+                'id': dataPreset.id,
+                'name': dataPreset.name,
+                'value': JSON.parse(dataPreset.value)
+              });
+            }
+          }
+
+          this.presets.next(presetsArray);
         }
       })
     );
@@ -161,12 +173,19 @@ export class AudrosService {
   }
 
   public savePreset(id: string, name: string, preset: any): Observable<any> {
-    let url = `${this.audrosServer}${this._baseUrl}savePreset@${id}`;
+    let arrayPreset: any[] = [];
+    for (const [key, value] of Object.entries(preset)) {
+      arrayPreset.push(key+'='+value);
+    };
+
+    const argumentsPreset = arrayPreset.join(';');
+
+    let url = `${this.audrosServer}${this._baseUrl}savePreset@${id}@${name}@${argumentsPreset}`;
     if (id === undefined || id === null || id === '') {
-      url = `${this.audrosServer}${this._baseUrl}newPreset`;
+      url = `${this.audrosServer}${this._baseUrl}newPreset@${name}@${argumentsPreset}`;
     }
 
-    return this._httpClient.post(url, {name: name, preset: preset}).pipe(
+    return this._httpClient.get(url).pipe(
       map((data: any) => {
         const hasError  = this.handleError(data);
         if (hasError) {
@@ -266,5 +285,14 @@ export class AudrosService {
 
     return false;
 
+  }
+
+  private _isJsonString(str: string) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
   }
 }
