@@ -12,8 +12,7 @@
   <mat-form-field *ngFor="let filter of filters">
     <mat-label>{{ filter.displayName }}</mat-label>
     <input *ngIf="filter.type === 'input'" matInput (change)="fieldChanged(filter.name, $event)" [value]="getValueToSearch(filter.name)">
-    <mat-select [value]="getValueToSearch(filter.name)" *ngIf="filter.type === 'select'"  (selectionChange)="fieldChanged(filter.name, $event)">
-      <mat-option></mat-option>
+    <mat-select multiple [value]="getValueToSearch(filter.name)" *ngIf="filter.type === 'select'"  (selectionChange)="fieldChanged(filter.name, $event)">
       <mat-option *ngFor="let filterOption of filter.values" [value]="filterOption">{{ filterOption | titlecase }}</mat-option>
     </mat-select>
   </mat-form-field>

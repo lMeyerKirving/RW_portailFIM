@@ -41,6 +41,7 @@ export class ListComponent implements OnInit {
   }
 
   filterObjects(filterSelection: any): void {
+    console.log(filterSelection);
     let filtered: any[] = [];
     this.filterSelection = filterSelection;
 
@@ -52,9 +53,17 @@ export class ListComponent implements OnInit {
 
       const filterValue = filterSelection[filterParam];
 
-      const inSearch = this.allObjects.filter((object: any) => (
-        object[filterParam] !== undefined && object[filterParam].includes(filterValue)
-      ));
+      const inSearch = this.allObjects.filter((object: any) => {
+        if (object[filterParam] === undefined) {
+          return false;
+        }
+
+        if (filterValue instanceof Array) {
+             return filterValue.some(v => object[filterParam].includes(v));
+        }
+
+        return object[filterParam].includes(filterValue);
+      });
 
       if (filtered.length === 0) {
         filtered = inSearch;
