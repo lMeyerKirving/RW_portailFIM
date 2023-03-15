@@ -10,6 +10,10 @@
           [thumbImage]="bigImageUrl"
           [fullImage]="bigImageUrlOriginal"
           [enableScrollZoom]="true"
+          [enableLens]="true"
+          [circularLens]="true"
+          [lensHeight]="200"
+          [lensWidth]="200"
       ></lib-ngx-image-zoom>
     </div>
 
@@ -44,23 +48,23 @@
               </a>
             </div>
           </div>
+
+          <div class="mt-6">
+
+            <div class="text-lg mb-2 font-bold">
+              Image gallery
+            </div>
+
+            <div class="flex gap-4 flex-wrap">
+
+              <img class="c-pointer image-galery" *ngFor="let imageGallery of object.pictures" [src]="imageGallery.url" (click)="changeBigImage(imageGallery)">
+
+            </div>
+
+          </div>
         </div>
 
       </div>
-    </div>
-
-  </div>
-
-  <div class="mt-6">
-
-    <div class="text-lg mb-2 font-bold">
-      Image gallery
-    </div>
-
-    <div class="flex gap-4 flex-wrap">
-
-      <img class="c-pointer image-galery" *ngFor="let imageGallery of object.pictures" [src]="imageGallery.url" (click)="changeBigImage(imageGallery)">
-
     </div>
 
   </div>

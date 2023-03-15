@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
+  loading: boolean = false;
+
   login = '';
 
   allObjects: any[] = [];
@@ -26,7 +28,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.login = this._audrosService.UL;
 
-    this._audrosService.objects.subscribe((objects) => {
+    this._audrosService.objects.subscribe((objects: any) => {
       this.objects = objects;
       this.allObjects = objects;
 
@@ -38,10 +40,11 @@ export class ListComponent implements OnInit {
 
       this.filterObjects(this.filterSelection);
     });
+
+    this.loadAllObjects();
   }
 
   filterObjects(filterSelection: any): void {
-    console.log(filterSelection);
     let filtered: any[] = [];
     this.filterSelection = filterSelection;
 
@@ -98,7 +101,6 @@ export class ListComponent implements OnInit {
   }
 
   exportPdf(): void {
-
     if (!this.selection || !this.selection.length) {
       this._matSnackBar.open('Please select at least one object to export', 'Close', { duration: 3000 });
       return;
@@ -154,12 +156,19 @@ export class ListComponent implements OnInit {
 
   logout(): void {
     this._audrosService.logout().subscribe(() => {
-      console.log('logged out');
       window.location.reload();
     });
   }
 
-  private _generateDataChunk(data: any, chunk = 4) {
+  loadAllObjects(): void {
+    this.loading = true;
+
+    this._audrosService.getObjects().subscribe(() => {
+      this.loading = false;
+    })
+  }
+
+  private _generateDataChunk(data: any, chunk = 6) {
     let index: number;
     let dataChunk: [][] = [];
     for (index = 0; index < data.length; index += chunk) {

@@ -32,6 +32,13 @@ export class AudrosService {
   ) {
     let url = document.location.protocol + '//' + document.location.hostname + ':' + document.location.port + '/';
     this.audrosServer = url;
+
+    if ("aud_objects" in localStorage) {
+      const audObjects = localStorage.getItem('aud_objects');
+      if (audObjects !== null) {
+        this.objects.next(JSON.parse(audObjects));
+      }
+    }
   }
 
   public async connectAudros(username: string, password: string): Promise<any> {
@@ -94,11 +101,21 @@ export class AudrosService {
 
           for (const dataPreset of data.data) {
             if (this._isJsonString(dataPreset.value)) {
+
+              let presetValue = JSON.parse(dataPreset.value);
+              for (const valueFilterKey in presetValue) {
+                let valueFilter = presetValue[valueFilterKey];
+                if (typeof valueFilter === 'string' && valueFilter.includes(',')) {
+                  presetValue[valueFilterKey] = valueFilter.split(',');
+                }
+              }
+
               presetsArray.push({
                 'id': dataPreset.id,
                 'name': dataPreset.name,
-                'value': JSON.parse(dataPreset.value)
+                'value': presetValue
               });
+
             }
           }
 
@@ -108,8 +125,17 @@ export class AudrosService {
     );
   }
 
-  public getObjects(): Observable<any> {
-    const url = `${this.audrosServer}${this._baseUrl}objects`;
+  public getObjects(favorites: boolean = false): Observable<any> {
+    if (favorites && this.objects.getValue().length > 0) {
+      console.log('not loading favorites as we already have objects!');
+      return of(true);
+    }
+
+    let url = `${this.audrosServer}${this._baseUrl}objects`;
+    if (favorites) {
+      url += '@favorites';
+    }
+
     return this._httpClient.get(url).pipe(
       map((data: any) => {
         const hasError  = this.handleError(data);
@@ -119,6 +145,7 @@ export class AudrosService {
 
         if (data !== null) {
           this.objects.next(data.data);
+          localStorage.setItem('aud_objects', JSON.stringify(data.data));
         }
       })
     );

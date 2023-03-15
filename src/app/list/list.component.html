@@ -2,6 +2,7 @@
   <div>Raymond Weil - FIM Portal</div>
   <div>Connected as: {{ login }} - <button mat-flat-button (click)="logout()">Logout</button></div>
 </div>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
 <div class="wrapper p-4">
 
@@ -26,7 +27,7 @@
     </div>
 
     <ng-container *ngIf="itemSet.length > 0">
-      <cdk-virtual-scroll-viewport itemSize="591" class="list" minBufferPx="5000" maxBufferPx="5000">
+      <cdk-virtual-scroll-viewport itemSize="482" class="list" minBufferPx="5000" maxBufferPx="5000">
         <div class="flex gap-itemSet mb-2" *cdkVirtualFor="let set of itemSet">
           <app-objet-card class="result-objet" *ngFor="let object of set" (selectionChanged)="selectionChanged($event)" [object]="object" [isFavorite]="isInFavorites(object)"></app-objet-card>
         </div>

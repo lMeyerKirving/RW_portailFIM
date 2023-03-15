@@ -23,10 +23,7 @@ export class AudrosInterceptor implements HttpInterceptor {
   {
     "id": "100010",
     "name": "Preset 2",
-    "value": {
-      "favoritesOnly": false,
-      "material": "gold"
-    }
+    "value": "{\"favoritesOnly\": true,\"material\": \"gold,steel\"}"
   }];
 
   constructor() { }

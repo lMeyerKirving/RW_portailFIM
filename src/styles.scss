@@ -17,7 +17,7 @@ body {
   cursor: pointer;
 }
 
-.ngxImageZoomContainer {
-  width: 300px !important;
-  height: 450px !important;
+.ngxImageZoomContainer, .ngxImageZoomThumbnail {
+  width: 435px !important;
+  height: 650px !important;
 }

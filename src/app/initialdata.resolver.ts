@@ -18,7 +18,7 @@ export class InitialdataResolver implements Resolve<boolean> {
     return forkJoin([
       this._audrosService.getFilters(),
       this._audrosService.getPresets(),
-      this._audrosService.getObjects(),
+      this._audrosService.getObjects(true),
       this._audrosService.getFavorites(),
     ]);
   }

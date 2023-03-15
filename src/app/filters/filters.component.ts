@@ -19,7 +19,7 @@ export class FiltersComponent implements OnInit {
   view = 'filters';
 
   public toSearch = {
-    favoritesOnly: false
+    favoritesOnly: true
   };
 
   constructor(
@@ -36,6 +36,8 @@ export class FiltersComponent implements OnInit {
     this._audrosService.presets.subscribe(presets => {
       this.presets = presets;
     });
+
+    this.doFilter();
   }
 
   loadPreset(preset: any): void {
